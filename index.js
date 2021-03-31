@@ -29,38 +29,3 @@ Powered by CoinDesk. https://www.coindesk.com/price/bitcoin`
   }).catch (err => {
       console.error(err)
 });
-//
-//
-//     .then(response => {
-//     const data = response.data.data ? response.data.data : {}
-//     let tweet
-//     if (data.Events && data.Events.length) {
-//         //tweet the first event in the array
-//         tweet = 'Year ' + data.Events[0].year + ' - ' + data.Events[0].text
-//     } else {
-//         tweet = 'Nothing happened today :)'
-//     }
-//
-//     twitterClient.tweets.statusesUpdate({
-//         status: tweet
-//     }).then (response => {
-//         console.log("Tweeted!", response)
-//     }).catch(err => {
-//         console.error(err)
-//     })
-// }).catch (err => {
-//     console.error(err)
-// });
-//
-// {
-//   "time":{
-//     "updated":"Sep 18, 2013 17:27:00 UTC",
-//     "updatedISO":"2013-09-18T17:27:00+00:00"
-//   },
-//   "disclaimer":"This data was produced from the CoinDesk Bitcoin Price Index. Non-USD currency data converted using hourly conversion rate from openexchangerates.org",
-//   "bpi":{
-//     "USD":{"code":"USD","symbol":"$","rate":"126.5235","description":"United States Dollar","rate_float":126.5235},
-//     "GBP":{"code":"GBP","symbol":"£","rate":"79.2495","description":"British Pound Sterling","rate_float":79.2495},
-//     "EUR":{"code":"EUR","symbol":"€","rate":"94.7398","description":"Euro","rate_float":94.7398}
-//   }
-// }
