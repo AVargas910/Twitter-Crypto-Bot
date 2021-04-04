@@ -11,44 +11,48 @@ const twitterClient = new TwitterClient({
 
 let btc = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin';
 let eth = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum';
-let ada = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=cardano';
-let vet = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=vechain';
-let dot = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=polkadot';
-let doge = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=dogecoin';
+
+var coins = [
+  'cardano',
+  'binancecoin',
+  'uniswap',
+  'polkadot',
+  'chainlink',
+  'dogecoin',
+  'stellar',
+  'litecoin',
+  'bittorrent-2',
+  'vechain'
+]
+
+coins = coins.map(coin => `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coin}`);
+
+for (i = coins.length; i >= 5; i--){
+  coins.splice(Math.floor(i*Math.random()), 1);
+};
 
 const btcRequest = axios.get(btc);
 const ethRequest = axios.get(eth);
-const adaRequest = axios.get(ada);
-const vetRequest = axios.get(vet);
-const dotRequest = axios.get(dot);
-const dogeRequest = axios.get(doge);
+const thirdRequest = axios.get(coins[0]);
+const fourthRequest = axios.get(coins[1]);
+const fifthRequest = axios.get(coins[2]);
+const sixthRequest = axios.get(coins[3]);
 
-axios.all([btcRequest, ethRequest, adaRequest, vetRequest, dotRequest, dogeRequest]).then(axios.spread((...responses) => {
+axios.all([btcRequest, ethRequest, thirdRequest, fourthRequest, fifthRequest, sixthRequest])
+  .then(axios.spread((...responses) => {
+
   const btcResponse = responses[0];
   const ethResponse = responses[1];
-  const adaResponse = responses[2];
-  const vetResponse = responses[3];
-  const dotResponse = responses[4];
-  const dogeResponse = responses[5];
-
+  const thirdResponse = responses[2];
+  const fourthResponse = responses[3];
+  const fifthResponse = responses[4];
+  const sixthResponse = responses[5];
 
   const btcPrice = btcResponse.data[0].current_price.toLocaleString('en-US', {
     style: 'currency', currency: 'USD'
   });
   const ethPrice = ethResponse.data[0].current_price.toLocaleString('en-US', {
     style: 'currency', currency: 'USD'
-  });
-  const adaPrice = adaResponse.data[0].current_price.toLocaleString('en-US', {
-    style: 'currency', currency: 'USD'
-  });
-  const vetPrice = vetResponse.data[0].current_price.toLocaleString('en-US', {
-    style: 'currency', currency: 'USD', minimumFractionDigits: 4, maximumFractionDigits: 4
-  });
-  const dotPrice = dotResponse.data[0].current_price.toLocaleString('en-US', {
-    style: 'currency', currency: 'USD'
-  });
-  const dogePrice = dogeResponse.data[0].current_price.toLocaleString('en-US', {
-    style: 'currency', currency: 'USD', minimumFractionDigits: 4, maximumFractionDigits: 4
   });
 
   let btcChange = btcResponse.data[0].price_change_percentage_24h.toFixed(2);
@@ -57,30 +61,46 @@ axios.all([btcRequest, ethRequest, adaRequest, vetRequest, dotRequest, dogeReque
   let ethChange = ethResponse.data[0].price_change_percentage_24h.toFixed(2);
   ethChange <= 0 ? ethChange : ethChange = '+' + ethChange;
 
-  let adaChange = adaResponse.data[0].price_change_percentage_24h.toFixed(2);
-  adaChange <= 0 ? adaChange : adaChange = '+' + adaChange;
+  function coinName(response){
+    var name = response.data[0].symbol.toUpperCase();
+    return name;
+  };
 
-  let dotChange = dotResponse.data[0].price_change_percentage_24h.toFixed(2);
-  dotChange <= 0 ? dotChange : dotChange = '+' + dotChange;
+  function displayPrice(response) {
+    var coinPrice;
+    if (response.data[0].current_price < 1) {
+      coinPrice = response.data[0].current_price.toLocaleString('en-US', {
+        style: 'currency', currency: 'USD', minimumFractionDigits: 4, maximumFractionDigits: 4
+      });
+    } else {
+      coinPrice = response.data[0].current_price.toLocaleString('en-US', {
+        style: 'currency', currency: 'USD'
+      });
+    }
+    return coinPrice;
+  };
 
-  let vetChange = vetResponse.data[0].price_change_percentage_24h.toFixed(2);
-  vetChange <= 0 ? vetChange : vetChange = '+' + vetChange;
-
-  let dogeChange = dogeResponse.data[0].price_change_percentage_24h.toFixed(2);
-  dogeChange <= 0 ? dogeChange : dogeChange = '+' + dogeChange;
+  function percentChange(response) {
+    var coinChange;
+    coinChange = response.data[0].price_change_percentage_24h.toFixed(2);
+    coinChange <= 0 ? coinChange : coinChange = '+' + coinChange;
+    return coinChange;
+  };
 
   let tweet;
-  tweet = `Current price of some popular coins (24h change)
+  tweet =
+
+`Live Cryptocurrency Prices (24h change)
 
 BTC: ${btcPrice} (${btcChange}%)
 ETH: ${ethPrice} (${ethChange}%)
-ADA: ${adaPrice} (${adaChange}%)
-DOT: ${dotPrice} (${dotChange}%)
-VET: ${vetPrice} (${vetChange}%)
-DOGE: ${dogePrice} (${dogeChange}%)
+${coinName(thirdResponse)}: ${displayPrice(thirdResponse)} (${percentChange(thirdResponse)}%)
+${coinName(fourthResponse)}: ${displayPrice(fourthResponse)} (${percentChange(fourthResponse)}%)
+${coinName(fifthResponse)}: ${displayPrice(fifthResponse)} (${percentChange(fifthResponse)}%)
+${coinName(sixthResponse)}: ${displayPrice(sixthResponse)} (${percentChange(sixthResponse)}%)
 
 Powered by CoinGecko API
-#BTC #ETH #ADA #VET #DOGE #DOT`;
+#BTC #ETH #${coinName(thirdResponse)} #${coinName(fourthResponse)} #${coinName(fifthResponse)} #${coinName(sixthResponse)}`;
 
   twitterClient.tweets.statusesUpdate({
       status: tweet
