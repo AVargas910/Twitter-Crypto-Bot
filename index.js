@@ -109,7 +109,7 @@ Powered by CoinGecko API
 
 console.log(tweet);
 
-  twitterClient.tweets.statusesOopsdate({
+  twitterClient.tweets.statusesUpdate({
       status: tweet
   }).then (response => {
       console.log("Tweeted!", response)
