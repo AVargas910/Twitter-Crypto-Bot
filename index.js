@@ -13,21 +13,19 @@ let btc = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bi
 let eth = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum';
 
 var coins = [
-  'cardano',
-  'binancecoin',
-  'uniswap',
-  'polkadot',
-  'chainlink',
-  'dogecoin',
-  'stellar',
-  'litecoin',
-  'bittorrent-2',
-  'vechain'
+  'polkadot', 'binancecoin', 'cardano',
+  'uniswap', 'chainlink', 'ripple',
+  'litecoin', 'stellar', 'bittorrent-2',
+  'vechain', 'dogecoin', 'theta-token',
+  'filecoin', 'tron', 'terra-luna',
+  'solana', 'eos', 'holotoken',
+  'iota', 'monero', 'tezos',
+  'neo', 'ftx-token', 'pancakeswap-token'
 ]
 
 coins = coins.map(coin => `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coin}`);
 
-for (i = coins.length; i >= 5; i--){
+for (i = coins.length; i >= 6; i--){
   coins.splice(Math.floor(i*Math.random()), 1);
 };
 
@@ -37,8 +35,9 @@ const thirdRequest = axios.get(coins[0]);
 const fourthRequest = axios.get(coins[1]);
 const fifthRequest = axios.get(coins[2]);
 const sixthRequest = axios.get(coins[3]);
+const seventhRequest = axios.get(coins[4]);
 
-axios.all([btcRequest, ethRequest, thirdRequest, fourthRequest, fifthRequest, sixthRequest])
+axios.all([btcRequest, ethRequest, thirdRequest, fourthRequest, fifthRequest, sixthRequest, seventhRequest])
   .then(axios.spread((...responses) => {
 
   const btcResponse = responses[0];
@@ -47,6 +46,7 @@ axios.all([btcRequest, ethRequest, thirdRequest, fourthRequest, fifthRequest, si
   const fourthResponse = responses[3];
   const fifthResponse = responses[4];
   const sixthResponse = responses[5];
+  const seventhResponse = responses[6];
 
   const btcPrice = btcResponse.data[0].current_price.toLocaleString('en-US', {
     style: 'currency', currency: 'USD'
@@ -83,7 +83,11 @@ axios.all([btcRequest, ethRequest, thirdRequest, fourthRequest, fifthRequest, si
   function percentChange(response) {
     var coinChange;
     coinChange = response.data[0].price_change_percentage_24h.toFixed(2);
-    coinChange <= 0 ? coinChange : coinChange = '+' + coinChange;
+    coinChange <= 0 ?
+      `(${coinChange}%)`:
+        coinChange >= 10 ?
+        coinChange = `(+${coinChange}%) 🚀`:
+        coinChange = `(+${coinChange}%)`;
     return coinChange;
   };
 
@@ -94,13 +98,16 @@ axios.all([btcRequest, ethRequest, thirdRequest, fourthRequest, fifthRequest, si
 
 BTC: ${btcPrice} (${btcChange}%)
 ETH: ${ethPrice} (${ethChange}%)
-${coinName(thirdResponse)}: ${displayPrice(thirdResponse)} (${percentChange(thirdResponse)}%)
-${coinName(fourthResponse)}: ${displayPrice(fourthResponse)} (${percentChange(fourthResponse)}%)
-${coinName(fifthResponse)}: ${displayPrice(fifthResponse)} (${percentChange(fifthResponse)}%)
-${coinName(sixthResponse)}: ${displayPrice(sixthResponse)} (${percentChange(sixthResponse)}%)
+${coinName(thirdResponse)}: ${displayPrice(thirdResponse)} ${percentChange(thirdResponse)}
+${coinName(fourthResponse)}: ${displayPrice(fourthResponse)} ${percentChange(fourthResponse)}
+${coinName(fifthResponse)}: ${displayPrice(fifthResponse)} ${percentChange(fifthResponse)}
+${coinName(sixthResponse)}: ${displayPrice(sixthResponse)} ${percentChange(sixthResponse)}
+${coinName(seventhResponse)}: ${displayPrice(seventhResponse)} ${percentChange(seventhResponse)}
 
 Powered by CoinGecko API
-#BTC #ETH #${coinName(thirdResponse)} #${coinName(fourthResponse)} #${coinName(fifthResponse)} #${coinName(sixthResponse)}`;
+#BTC #ETH #${coinName(thirdResponse)} #${coinName(fourthResponse)} #${coinName(fifthResponse)} #${coinName(sixthResponse)} #${coinName(seventhResponse)}`;
+
+console.log(tweet);
 
   twitterClient.tweets.statusesUpdate({
       status: tweet
