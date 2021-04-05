@@ -84,7 +84,7 @@ axios.all([btcRequest, ethRequest, thirdRequest, fourthRequest, fifthRequest, si
     var coinChange;
     coinChange = response.data[0].price_change_percentage_24h.toFixed(2);
     coinChange <= 0 ?
-      `(${coinChange}%)`:
+      coinChange = `(${coinChange}%)`:
         coinChange >= 10 ?
         coinChange = `(+${coinChange}%) 🚀`:
         coinChange = `(+${coinChange}%)`;
@@ -109,7 +109,7 @@ Powered by CoinGecko API
 
 console.log(tweet);
 
-  twitterClient.tweets.statusesUpdate({
+  twitterClient.tweets.statusesOopsdate({
       status: tweet
   }).then (response => {
       console.log("Tweeted!", response)
