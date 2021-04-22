@@ -55,12 +55,6 @@ axios.all([btcRequest, ethRequest, thirdRequest, fourthRequest, fifthRequest, si
     style: 'currency', currency: 'USD'
   });
 
-  let btcChange = btcResponse.data[0].price_change_percentage_24h.toFixed(2);
-  btcChange <= 0 ? btcChange : btcChange = '+' + btcChange;
-
-  let ethChange = ethResponse.data[0].price_change_percentage_24h.toFixed(2);
-  ethChange <= 0 ? ethChange : ethChange = '+' + ethChange;
-
   function coinName(response){
     var name = response.data[0].symbol.toUpperCase();
     return name;
@@ -96,8 +90,8 @@ axios.all([btcRequest, ethRequest, thirdRequest, fourthRequest, fifthRequest, si
 
 `Live Cryptocurrency Prices (24h change)
 
-BTC: ${btcPrice} (${btcChange}%)
-ETH: ${ethPrice} (${ethChange}%)
+BTC: ${btcPrice} ${percentChange(btcResponse)}
+ETH: ${ethPrice} ${percentChange(ethResponse)}
 ${coinName(thirdResponse)}: ${displayPrice(thirdResponse)} ${percentChange(thirdResponse)}
 ${coinName(fourthResponse)}: ${displayPrice(fourthResponse)} ${percentChange(fourthResponse)}
 ${coinName(fifthResponse)}: ${displayPrice(fifthResponse)} ${percentChange(fifthResponse)}
