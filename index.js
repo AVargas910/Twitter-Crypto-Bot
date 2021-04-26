@@ -88,7 +88,7 @@ axios.all([btcRequest, ethRequest, thirdRequest, fourthRequest, fifthRequest, si
   let tweet;
   tweet =
 
-`Live Cryptocurrency Prices (24h change)
+`Live Crypto Prices (24h change)
 
 BTC: ${btcPrice} ${percentChange(btcResponse)}
 ETH: ${ethPrice} ${percentChange(ethResponse)}
