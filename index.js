@@ -17,6 +17,8 @@ var coins = [
   'uniswap', 'chainlink', 'ripple',
   'litecoin', 'stellar', 'bittorrent-2',
   'vechain', 'dogecoin', 'theta-token',
+  'internet-computer', 'bitcoin-cash', 'matic-network',
+  'maker', 'avalanche-2', 'algorand',
   'filecoin', 'tron', 'terra-luna',
   'solana', 'eos', 'holotoken',
   'iota', 'monero', 'tezos',
