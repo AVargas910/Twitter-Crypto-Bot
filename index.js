@@ -22,7 +22,8 @@ var coins = [
   'filecoin', 'tron', 'terra-luna',
   'solana', 'eos', 'holotoken',
   'iota', 'monero', 'tezos',
-  'neo', 'ftx-token', 'pancakeswap-token'
+  'neo', 'ftx-token', 'pancakeswap-token',
+  'algorand', 'cosmos', 'hedera-hashgraph'
 ]
 
 coins = coins.map(coin => `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coin}`);
@@ -101,7 +102,7 @@ ${coinName(sixthResponse)}: ${displayPrice(sixthResponse)} ${percentChange(sixth
 ${coinName(seventhResponse)}: ${displayPrice(seventhResponse)} ${percentChange(seventhResponse)}
 
 Powered by CoinGecko API
-#BTC #ETH #${coinName(thirdResponse)} #${coinName(fourthResponse)} #${coinName(fifthResponse)} #${coinName(sixthResponse)} #${coinName(seventhResponse)}`;
+$BTC $ETH $${coinName(thirdResponse)} $${coinName(fourthResponse)} $${coinName(fifthResponse)} $${coinName(sixthResponse)} $${coinName(seventhResponse)}`;
 
 console.log(tweet);
 
