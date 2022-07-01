@@ -19,7 +19,7 @@ var coins = [
   'vechain', 'dogecoin', 'theta-token',
   'internet-computer', 'bitcoin-cash', 'matic-network',
   'maker', 'avalanche-2', 'loopring',
-  'filecoin', 'tron', 'terra-luna',
+  'filecoin', 'tron', 'crypto-com-chain',
   'solana', 'eos', 'holotoken',
   'iota', 'monero', 'tezos',
   'neo', 'ftx-token', 'pancakeswap-token',
