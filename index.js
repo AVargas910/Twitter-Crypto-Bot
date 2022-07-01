@@ -15,7 +15,7 @@ let eth = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=et
 var coins = [
   'polkadot', 'binancecoin', 'cardano',
   'uniswap', 'chainlink', 'ripple',
-  'litecoin', 'stellar', 'bittorrent-2',
+  'litecoin', 'stellar', 'leo-token',
   'vechain', 'dogecoin', 'theta-token',
   'internet-computer', 'bitcoin-cash', 'matic-network',
   'maker', 'avalanche-2', 'loopring',
